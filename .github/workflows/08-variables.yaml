@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "Organisation variable: ${{ vars.ORG_VAR }}"
           echo "Organisation overwritten variable: ${{ vars.OVERWRITTEN_VAR }}"
-          echo "Repository variable: ${{ vars.REPOSITORY_VAR }}      
+          echo "Repository variable: ${{ vars.REPOSITORY_VAR }}"     
   echo-prod:
     runs-on: ubuntu-latest
     environment: prod
