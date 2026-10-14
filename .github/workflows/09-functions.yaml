@@ -20,11 +20,9 @@ jobs:
               run: echo "I am a bug fix"
             - name: Sleep for 20 seconds
               run: sleep 20
-            - name: Failing step
-              run: exit 1
-            - name: I will be skipped
+            - name: I will execute
               if: ${{ success() }}
-              run: echo "This step runs only if the previous step succeeds"
+              run: echo "I will print if previous step succeeds"
             - name: I will execute
               if: ${{ failure() }}
               run: echo "This step runs if any previous steps fails"
