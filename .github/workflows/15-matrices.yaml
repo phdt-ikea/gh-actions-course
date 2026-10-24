@@ -56,7 +56,6 @@ jobs:
         exclude:
           - color: green
             shape: circle
-            size: large
     steps:
       - name: Dummy step
         run: echo "${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}"
