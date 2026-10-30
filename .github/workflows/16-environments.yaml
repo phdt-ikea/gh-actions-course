@@ -1,5 +1,5 @@
 name: 16 - Working with Environments
-run-name: 16 - Working with Environments | env - ${{ inputs.target-env }}
+run-name: 16 - Working with Environments | env - ${{ inputs.target-environment }}
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
 jobs:
   echo:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.target-env }}
+    environment: ${{ inputs.target-environment }}
     env:
       my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
     steps:
