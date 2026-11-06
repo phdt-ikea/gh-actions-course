@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     env:
-      my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
+      my-env-value: ${{ vars['MY_ENV_VALUE'] || 'default value' }}
     steps:
       - name: Echo vars 
         run: |
@@ -24,7 +24,7 @@ jobs:
     needs: e2e-tests
     environment: prod
     env:
-      my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
+      my-env-value: ${{ vars['MY_ENV_VALUE'] || 'default value' }}
     steps:
       - name: Echo vars 
         run: |
@@ -34,7 +34,7 @@ jobs:
     needs: e2e-tests
     environment: prod
     env:
-      my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
+      my-env-value: ${{ vars['MY_ENV_VALUE'] || 'default value' }}
     steps:
       - name: Echo vars 
         run: |
@@ -44,7 +44,7 @@ jobs:
     needs: e2e-tests
     environment: prod
     env:
-      my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
+      my-env-value: ${{ vars['MY_ENV_VALUE'] || 'default value' }}
     steps:
       - name: Echo vars 
         run: |
