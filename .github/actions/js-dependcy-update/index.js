@@ -40,9 +40,13 @@ async function run() {
     ...commonExecOpts
   });
 
-  const gitStatus = await exec.getExecOutput('git status -s package.json', [], {
-    ...commonExecOpts
-  });
+  const gitStatus = await exec.getExecOutput(
+    'git status -s package*.json', 
+    [], 
+    {
+      ...commonExecOpts
+    }
+  );
 
   if (gitStatus.stdout.length > 0) {
     core.info('[js-dependency-update] : There are updates available!');
