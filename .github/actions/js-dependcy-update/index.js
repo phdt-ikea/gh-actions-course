@@ -7,7 +7,7 @@ const validateDirectoryName = ({ dirName }) => /^[a-zA-Z0-9_\-\/]+$/.test(dirNam
 async function run() {
   const baseBranch = core.getInput('base-branch');
   const targetBranch = core.getInput('target-branch');
-  const workingDir = core.getInput('working-directory');
+  const workingDir = core.getInput('working-dir');
   const ghToken = core.getInput('gh-token');
   const debug = core.getBooleanInput('debug');
 
