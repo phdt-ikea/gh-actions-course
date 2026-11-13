@@ -1,15 +1,21 @@
+// GitHub Actions libraries for core functions, command execution, and GitHub API
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const github = require('@actions/github');
 
+// Configures Git user identity for automated commits
 const setupGit = async () => {
   await exec.exec('git config --global user.name "gh-automation"');
   await exec.exec('git config --global user.email "gh-automation@email.com"');
 };
 
+// Validates branch name contains only safe characters: alphanumeric, underscores, hyphens, dots, forward slashes
 const validateBranchName = ({ branchName }) => /^[a-zA-Z0-9_\-\.\/]+$/.test(branchName);
+
+// Validates directory name contains only safe characters: alphanumeric, underscores, hyphens, forward slashes
 const validateDirectoryName = ({ dirName }) => /^[a-zA-Z0-9_\-\/]+$/.test(dirName);
 
+// Creates a logger object with debug, info, and error methods that prefix messages
 const setupLogger = ({ debug, prefix } = { debug: false, prefix: '' })  => ({
   debug: (message) => {
     if (debug) {
@@ -24,7 +30,9 @@ const setupLogger = ({ debug, prefix } = { debug: false, prefix: '' })  => ({
   }
 });
 
+// Main action function: checks for npm updates and creates a PR if updates are found
 async function run() {
+  // Retrieve action inputs from GitHub Actions workflow
   const baseBranch = core.getInput('base-branch', { required: true });
   const headBranch = core.getInput('head-branch', { required: true});
   const workingDir = core.getInput('working-dir', { required: true });
@@ -37,10 +45,12 @@ async function run() {
     cwd: workingDir
   };
 
+  // Mask the token in action logs for security
   core.setSecret(ghToken);
 
   logger.debug('Validating inputs - base-branch, head-branch, working-directory');
 
+  // Validate branch and directory names for security
   if (!validateBranchName({ branchName: baseBranch })) {
     core.setFailed('Invalid base branch name. Branch name should include only characters, numbers, underscores, dots, hyphens, and forwardslashes.');
     return;
@@ -60,11 +70,13 @@ async function run() {
   logger.debug(`head branch is ${headBranch}`);
   logger.debug(`working directory is ${workingDir}`);
 
+  // Run npm update to check for available package updates
   logger.debug('Checking for package updates');
   await exec.exec('npm update', [], {  
     ...commonExecOpts
   });
 
+  // Check if package files have been modified (indicating updates are available)
   const gitStatus = await exec.getExecOutput(
     'git status -s package*.json', 
     [], 
@@ -79,6 +91,7 @@ async function run() {
     await setupGit();
 
     logger.debug('Committing and pushing package*.json changes');
+    // Create new branch and commit package updates
     await exec.exec(`git checkout -b ${headBranch}`, [], {
       ...commonExecOpts
     });
@@ -92,6 +105,7 @@ async function run() {
       ...commonExecOpts
     });
 
+    // Initialize GitHub API client and create pull request
     logger.debug('Fetching octokit API');
     const octokit = github.getOctokit(ghToken);
 
@@ -115,4 +129,5 @@ async function run() {
   }
 }
 
+// Execute the action
 run();
