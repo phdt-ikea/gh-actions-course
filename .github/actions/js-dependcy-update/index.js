@@ -57,7 +57,7 @@ async function run() {
   }
 
   logger.debug(`base branch is ${baseBranch}`);
-  logger.debug(`target branch is ${headBranch}`);
+  logger.debug(`head branch is ${headBranch}`);
   logger.debug(`working directory is ${workingDir}`);
 
   logger.debug('Checking for package updates');
