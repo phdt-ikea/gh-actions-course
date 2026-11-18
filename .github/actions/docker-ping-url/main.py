@@ -21,6 +21,9 @@ import requests
 class WebsiteUnreachableError(Exception):
     """Raised when the target website is malformed or unreachable."""
 
+def set_output(file_path, key, value):
+    with open(file_path, "a") as file:
+        print(f'{key}={value}', file=file)
 
 def ping_url(url, delay, max_trials):
     """
@@ -116,6 +119,8 @@ def run():
 
     # Attempt to reach the website with retry logic
     website_reachable = ping_url(website_url, int(delay), int(max_trials))
+
+    set_output(os.getenv("GITHUB_OUTPUT"), "url-reachable", website_reachable)
 
     # Fail the action if website is not reachable
     if not website_reachable:
