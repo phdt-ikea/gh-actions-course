@@ -1,5 +1,4 @@
 name: 17 - 3 - Custom Actions - Docker
-run-name: 17 - 3 - Custom Actions - Docker | BB - ${{ inputs.base-branch }} HB - ${{ inputs.head-branch }} WD - ${{ inputs.working-dir }}
 
 on:
   workflow_dispatch:
