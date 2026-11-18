@@ -108,8 +108,8 @@ def run():
     # Retrieve input parameters from GitHub Actions environment variables
     # Format: INPUT_<input_name> (defined in action.yaml)
     website_url = os.getenv("INPUT_URL")
-    delay = int(os.getenv("INPUT_DELAY"))
-    max_trials = int(os.getenv("INPUT_MAX_TRIALS"))
+    delay = int(os.environ["INPUT_DELAY"])
+    max_trials = int(os.environ["INPUT_MAX_TRIALS"])
 
     # Attempt to reach the website with retry logic
     website_reachable = ping_url(website_url, delay, max_trials)
